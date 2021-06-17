@@ -41,7 +41,6 @@ document.getElementById('0').onclick = () => {
 document.getElementById('comma').onclick = () => {
   if(result.textContent.indexOf('.') === -1){
     result.textContent += '.'
-    console.log('123');
   }
  
 }
