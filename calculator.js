@@ -1,122 +1,192 @@
-const result = document.getElementById('tempResult')
-const plus = document.getElementById('plus')
-const minus = document.getElementById('minus')
-const multi = document.getElementById('multi')
-const div = document.getElementById('div')
-const equally = document.getElementById('equally')
+class Calculator {
+  constructor() {
+    this.map = [
+      'CE', // 0
+      'C', // 1
+      '⌫', // 2
+      '/', // 3
+      'br',
+      '7',
+      '8',
+      '9',
+      '*', // 8
+      'br',
+      '4',
+      '5',
+      '6',
+      '-', // 13
+      'br',
+      '1',
+      '2',
+      '3',
+      '+', // 18
+      'br',
+      '±', // 20
+      '0',
+      '.', // 22
+      '=' // 23
+    ]
 
-let temp = 0
-let memory = 0
-
-document.getElementById('1').onclick = () => {
-  stringPlus(1)
-}
-document.getElementById('2').onclick = () => {
-  stringPlus(2)
-}
-document.getElementById('3').onclick = () => {
-  stringPlus(3)
-}
-document.getElementById('4').onclick = () => {
-  stringPlus(4)
-}
-document.getElementById('5').onclick = () => {
-  stringPlus(5)
-}
-document.getElementById('6').onclick = () => {
-  stringPlus(6)
-}
-document.getElementById('7').onclick = () => {
-  stringPlus(7)
-}
-document.getElementById('8').onclick = () => {
-  stringPlus(8)
-}
-document.getElementById('9').onclick = () => {
-  stringPlus(9)
-}
-document.getElementById('0').onclick = () => {
-  stringPlus(0)
-}
-document.getElementById('comma').onclick = () => {
-  if(result.textContent.indexOf('.') === -1){
-    result.textContent += '.'
+    this.temp = 0
+    this.memory = 0
+    this.lastAction = null
+    this.result = document.querySelector('#result')
   }
- 
-}
-document.getElementById('clear').onclick = () => {
-  result.textContent = 0
-}
-document.getElementById('allClear').onclick = () => {
-  result.textContent = 0
-  memory = 0
-}
-document.getElementById('delete').onclick = () => {
-  if (result.textContent.length > 1) {
-    result.textContent = result.textContent.slice(0, -1)
+
+  plus() {
+    this.lastAction = '+'
+    this.memory = this.memory + Number(this.result.textContent)
+    this.clear()
   }
-  else {
-    result.textContent = 0
+
+  minus() {
+    this.lastAction = '-'
+    this.memory = Number(this.result.textContent) - this.memory
+    this.clear()
   }
-}
-document.getElementById('plusMinus').onclick = () => {
-  if (result.textContent !== '0') {
-    result.textContent = -result.textContent
+
+  divide() {
+    this.lastAction = ':'
+    this.memory = Number(this.result.textContent)
+    this.clear()
   }
-}
 
-function stringPlus(digit) {
-  if (result.textContent === '0') {
-    temp = result.textContent
-    result.textContent = ''
+  multiply() {
+    this.lastAction = '*'
+    if (!this.memory) this.memory++
+    this.memory = this.memory * Number(this.result.textContent)
+    this.clear()
   }
-  result.textContent += digit
-}
 
-plus.onclick = () => {
-  lastAction = '+'
-  memory = memory + Number(result.textContent)
-  result.textContent = 0
-}
+  clear() {
+    this.result.textContent = 0
+  }
 
-minus.onclick = () => {
-  lastAction = '-'
-  memory = Number(result.textContent) - memory
-  result.textContent = 0
-}
+  allClear() {
+    this.temp = 0
+    this.memory = 0
+    this.clear()
+  }
 
-multi.onclick = () => {
-  lastAction = '*'
-  if (memory === 0) { memory++ }
-  memory = memory * Number(result.textContent)
-  result.textContent = 0
-}
-
-div.onclick = () => {
-  lastAction = ':'
-  memory = Number(result.textContent)
-  result.textContent = 0
-}
-
-
-
-equally.onclick = () => {
-  if (memory !== 0) {
-    if (lastAction === '*') {
-      result.textContent = memory * Number(result.textContent)
+  comma() {
+    if (this.result.textContent.indexOf('.') === -1) {
+      this.result.textContent += '.'
     }
   }
-  if (lastAction === ':') {
-    result.textContent = memory / Number(result.textContent)
-  }
-  if (lastAction === '+') {
-    result.textContent = memory + Number(result.textContent)
-  }
-  if (lastAction === '-') {
-    result.textContent = memory - Number(result.textContent)
+
+  delete() {
+    if (this.result.textContent.length > 1) {
+      this.result.textContent = this.result.textContent.slice(0, -1)
+    } else {
+      this.clear()
+    }
   }
 
-  memory = 0
-  if (result.textContent === 'Infinity') { result.textContent = 'ERROR' }
-  if (result.textContent === 'NaN') { result.textContent = 'ERROR' }
+  equally() {
+    if (this.memory !== 0) {
+      if (this.lastAction === '*') {
+        this.result.textContent = this.memory * Number(this.result.textContent)
+      }
+    }
+
+    if (this.lastAction === ':') {
+      this.result.textContent = this.memory / Number(this.result.textContent)
+    }
+
+    if (this.lastAction === '+') {
+      this.result.textContent = this.memory + Number(this.result.textContent)
+    }
+
+    if (this.lastAction === '-') {
+      this.result.textContent = this.memory - Number(this.result.textContent)
+    }
+
+    this.memory = 0
+
+    if (this.result.textContent === 'Infinity' || this.result.textContent === 'NaN') {
+      this.result.textContent = 'ERROR'
+    }
+  }
+
+  plusMinus() {
+    this.result.textContent = -this.result.textContent
+  }
+
+  useButton(digit) {
+    if (this.result.textContent === '0') {
+      if (digit === this.map[22]) {
+        this.result.textContent = '0.'
+      } else {
+        this.clear()
+        this.result.textContent = ''
+      }
+    }
+
+    switch (digit) {
+      case this.map[0]:
+        this.allClear()
+        break
+      case this.map[1]:
+        this.clear()
+        break
+      case this.map[2]:
+        this.delete()
+        break
+      case this.map[3]:
+        this.divide()
+        break
+      case this.map[8]:
+        this.multiply()
+        break
+      case this.map[13]:
+        this.minus()
+        break
+      case this.map[18]:
+        this.plus()
+        break
+      case this.map[20]:
+        this.plusMinus()
+        break
+      case this.map[22]:
+        this.comma()
+        break
+      case this.map[23]:
+        this.equally()
+        break
+      default:
+        this.result.textContent += digit
+    }
+  }
+
+  createElement(tagName, opts) {
+    const elem = document.createElement(tagName)
+    Object.assign(elem, opts)
+    Object.assign(elem.style, opts?.style)
+    return elem
+  }
 }
+
+const calculator = new Calculator()
+
+calculator.map.forEach((value, index) => {
+  const target = document.querySelector('#calculator')
+
+  if (value === 'br') {
+    return target.appendChild(
+      calculator.createElement('br')
+    )
+  }
+
+  const button = calculator.createElement('button', {
+    textContent: value,
+    style: index === 2 ? {
+      fontSize: 'small',
+      paddingBottom: '3px'
+    } : null,
+    onclick: function () {
+      calculator.useButton(this.textContent)
+    }
+  })
+
+  target.appendChild(button)
+})
