@@ -38,6 +38,13 @@ document.getElementById('9').onclick = () => {
 document.getElementById('0').onclick = () => {
   stringPlus(0)
 }
+document.getElementById('comma').onclick = () => {
+  if(result.textContent.indexOf('.') === -1){
+    result.textContent += '.'
+    console.log('123');
+  }
+ 
+}
 document.getElementById('clear').onclick = () => {
   result.textContent = 0
 }
@@ -92,6 +99,8 @@ div.onclick = () => {
   result.textContent = 0
 }
 
+
+
 equally.onclick = () => {
   if (memory !== 0) {
     if (lastAction === '*') {
@@ -110,4 +119,5 @@ equally.onclick = () => {
 
   memory = 0
   if (result.textContent === 'Infinity') { result.textContent = 'ERROR' }
+  if (result.textContent === 'NaN') { result.textContent = 'ERROR' }
 }
