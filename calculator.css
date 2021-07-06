@@ -2,12 +2,12 @@ body {
   user-select: none;
   text-align: center;
   font-family: sans-serif;
-  background-color: #999;
+  background-color: rgb(255, 255, 255);
 }
 
 h2 {
   font-family: sans-serif;
-  background-color: #888;
+  background-color: rgb(156, 156, 156);
   width: 250px;
   border: 1px solid black;
   margin: 20px auto 0 auto;
@@ -24,11 +24,11 @@ button {
 }
 
 button:hover {
-  background-color: rgb(197, 196, 196)
+  background-color: rgb(230, 230, 230)
 }
 
 button:active {
-  background-color: rgb(156, 156, 156)
+  background-color: rgb(211, 211, 211)
 }
 
 footer {
@@ -46,7 +46,7 @@ footer {
 }
 
 #calculator {
-  background-color: #888;
+  background-color: rgb(156, 156, 156);
   width: 250px;
   border: 1px solid black;
   height: max-content;

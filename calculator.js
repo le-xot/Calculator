@@ -31,6 +31,7 @@ class Calculator {
     this.memory = 0
     this.lastAction = null
     this.result = document.querySelector('#result')
+    this.audio = document.querySelector('audio')
   }
 
   plus() {
@@ -116,7 +117,7 @@ class Calculator {
     if (this.result.textContent === '0') {
       if (digit === this.map[22]) {
         this.result.textContent = '0.'
-      } else {
+      } else if (digit !== this.map[23]) {
         this.clear()
         this.result.textContent = ''
       }
@@ -164,6 +165,14 @@ class Calculator {
     Object.assign(elem.style, opts?.style)
     return elem
   }
+
+  playSound() {
+    this.audio.pause()
+    this.audio.volume = 0.2
+    this.audio.currentTime = 0
+    this.audio.play()
+    navigator.vibrate(135)
+  }
 }
 
 const calculator = new Calculator()
@@ -184,6 +193,7 @@ calculator.map.forEach((value, index) => {
       paddingBottom: '3px'
     } : null,
     onclick: function () {
+      calculator.playSound()
       calculator.useButton(this.textContent)
     }
   })
