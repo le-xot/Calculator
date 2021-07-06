@@ -155,7 +155,9 @@ class Calculator {
         this.equally()
         break
       default:
-        this.result.textContent += digit
+        if (this.result.textContent.length <= 14) {
+          this.result.textContent += digit
+        }
     }
   }
 

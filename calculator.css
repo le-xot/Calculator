@@ -38,6 +38,10 @@ footer {
   margin-left: 150px;
 }
 
+#result {
+  word-break: break-all;
+}
+
 #content {
   position: absolute;
   top: 50%;
