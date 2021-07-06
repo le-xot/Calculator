@@ -31,13 +31,6 @@ button:active {
   background-color: rgb(211, 211, 211)
 }
 
-footer {
-  font-family: sans-serif;
-  font-size: smaller;
-  margin-top: 20px;
-  margin-left: 150px;
-}
-
 #result {
   word-break: break-all;
 }
