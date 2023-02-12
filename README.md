@@ -1,4 +1,3 @@
-# calculator
-My first calculator on JS
+· Это первый мой проект на JS
 
-http://le-xot.ru/calculator/
+· This is my first JS project
